@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta content="text/html;charset=UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <meta http-equiv="Cache-Control" content="no cache"/>
+    <meta http-equiv="Expires" content="0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <script src="http://120.46.82.82:8080/code/static/fsLayui/scripts/pace.min.js"></script>
+    <link href="http://120.46.82.82:8080/code/static/fsLayui/css/pace-theme-flash.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="http://120.46.82.82:8080/code/static/fsLayui/plugins/layui/css/layui.css"
+          media="all"/>
+    <link rel="stylesheet" type="text/css" href="http://120.46.82.82:8080/code/static/fsLayui/css/fs.css" media="all"/>
+    <script type="text/javascript" src="http://120.46.82.82:8080/code/static/fsLayui/plugins/layui/layui.js"></script>
+    <script type="text/javascript"
+            src="http://120.46.82.82:8080/code/static/fsLayui/plugins/jquery/jquery.min.js"></script>
+    <script type="text/javascript"
+            src="http://120.46.82.82:8080/code/static/fsLayui/plugins/frame/js/fsDict.js?v=1.5.0"></script>
+    <script type="text/javascript"
+            src="http://120.46.82.82:8080/code/static/fsLayui/plugins/frame/js/fs.js?v=1.5.0"></script>
+    <script type="text/javascript"
+            src="http://120.46.82.82:8080/code/static/fsLayui/plugins/frame/js/frame.js?v=1.5.0"></script>
+</head>
+<body>
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space1">
+        <div class="layui-col-md12">
+            <div class="layui-row grid-demo">
+                <div class="layui-col-md6">
+                    <button class="layui-btn" function="top" topUrl="http://120.46.82.82:8080/code/admin/link/one.html"
+                            topWidth="800px" topMode="add"
+                            topHeight="400px" topTitle="新增友情链接"><i class="layui-icon">&#xe654;</i>新增
+                    </button>
+                    <button class="layui-btn layui-btn-danger" function="submit"
+                            url="http://120.46.82.82:8080/code/admin/link/delete"
+                            isMutiDml="1" isConfirm="1" confirmMsg="您是否要删除选中的数据？" inputs="linkId:">
+                        <i class="layui-icon">&#xe640;</i>批量删除
+                    </button>
+                    <button class="layui-btn" function="refresh">
+                        <i class="layui-icon">&#xe1002;</i>刷新
+                    </button>
+                </div>
+                <div class="layui-col-md12">
+                    <table id="fsDatagrid" lay-filter="fsDatagrid" isLoad="1" class="fsDatagrid"
+                           url="http://120.46.82.82:8080/code/admin/link/list"
+                           isPage="1" defaultForm="query_form" height="full-135">
+                    </table>
+                    <div class="fsDatagridCols">
+                        <p type="numbers" title="#"></p>
+                        <p checkbox="true"></p>
+                        <p field="linkName" align="center" width="120" title="链接名称" ></p>
+                        <p field="linkUrl" align="center" width="220" title="链接地址" templet="#linkUrlTpl"></p>
+						<p field="linkEmail" align="center"  width="220" title="联系人邮箱" ></p>
+						<p field="sort" align="center" width="60" title="排序" ></p>
+						<p field="right" align="center" width="330" toolbar="#barDemo" ></p>
+					</div>
+                    <script type="text/html" id="linkUrlTpl">
+						<a target="_blank" href="{{d.linkUrl}}">{{d.linkUrl}}</a>
+					</script>
+					<script type="text/html" id="barDemo">
+						<a class="layui-btn layui-btn-green layui-btn-xs" lay-event="top" topUrl="http://120.46.82.82:8080/code/admin/link/one.html"
+						topMode="readonly" topWidth="800px" topHeight="400px" topTitle="查看友情链接" inputs="linkId:">
+							<i class="layui-icon">&#xe615</i>查看
+						</a>
+						<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="top" topUrl="http://120.46.82.82:8080/code/admin/link/one.html"
+						   topMode="edit" topWidth="800px" topHeight="400px" topTitle="编辑友情链接" inputs="linkId:">
+							<i class="layui-icon">&#xe642</i>编辑
+						</a>
+						<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="submit" url="http://120.46.82.82:8080/code/admin/link/delete"
+						   isConfirm="1" confirmMsg="是否确定要删除选中的数据" inputs="linkId:">
+							<i class="layui-icon">&#xe640</i>删除
+						</a>
+					</script>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8"/>
+    <title>小师爱学习</title>
+    <link rel="shortcur icon" type="image/x-icon"
+          href="http://120.46.82.82:8080/code/static/foreground/images/logomin.png"/>
+    <link rel="stylesheet" href="http://120.46.82.82:8080/code/static/foreground/layui/css/layui.css"/>
+    <link rel="stylesheet" href="http://120.46.82.82:8080/code/static/foreground/css/global.css"/>
+
+    <script type="text/javascript" src="http://120.46.82.82:8080/code/static/js/jquery-1.8.3.min.js"></script>
+
+    <script type="text/javascript" src="http://120.46.82.82:8080/code/static/layui/layui.js"></script>
+    <!--all 可以不要手动加载模块-->
+    <!--    <script type="text/javascript" src="http://120.46.82.82:8080/code/static/layui/layui.all.js"></script>-->
+
+
+    <script type="text/javascript" src="http://120.46.82.82:8080/code/static/js/index.js"></script>
+
+    <script type="text/javascript" src="http://120.46.82.82:8080/code/static/js/unUsefulArticleManage.js"></script>
+</head>
+
+<body>
+<div th:replace="common/header::#h"></div>
+<div class="layui-container fly-marginTop fly-user-main">
+    <div th:replace="common/left::#l"></div>
+    <div class="fly-panel fly-panel-user" pad20>
+        <div class="layui-tab layui-tab-brief">
+            <div class="layui-tab-content" style="padding: 20px 0">
+                <div class="layui-tab-item layui-show">
+                    <ul class="mine-view jie-row">
+                        <li th:each="userDownload : ${userDownloadList}">
+                            <span th:if="${userDownload.article.hot}" class="layui-badge layui-bg-red">热门</span>
+                            <a class="jie-title" th:href="@{'/article/detail/'+${userDownload.article.articleId} +'.html'}"
+                             target="_blank" th:text="${userDownload.article.name}"
+                            ></a>
+                            <i th:text="${#dates.format(userDownload.downloadDate,'yyyy-MM-dd HH:mm:ss')}"></i>
+                            <em th:text="${userDownload.article.click}+'阅'"></em>
+                        </li>
+                    </ul>
+
+                    <div style="text-align: center" th:utext="${pageStr}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="common/footer::#f">
+
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,31 @@
+# 开发环境
+# 数据源配置
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://locaolhost:3306/db_code?characterEncoding=utf-8&serverTimezone=UTC&useUnicode=true
+    username: code
+    password: 123456
+
+
+  thymeleaf:
+    cache: false #开启缓存
+
+
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password:
+    timeout:  10000ms
+
+    jedis:
+      pool:
+        max-active: 8 # 连接池最大连接数（使用负值没有限制）
+        max-wait: -1ms # 连接池最大阻塞等待时间（使用负值没有限制）
+        max-idle: 8 # 连接池中的最大空闲链接
+        min-idle: 0 # 连接池中的最小空闲链接
+
+# 图片路径
+imgFilePath: D:/temp/img
+lucenePath: D:/temp/lucene

@@ -1,0 +1,46 @@
+<ul class="layui-nav layui-nav-tree layui-inline" lay-filter="user" id="l" xmlns:th="http://www.w3.org/1999/xhtml">
+    <li class="layui-nav-item">
+        <a href="http://120.46.82.82:8080/code/user/home">
+            <i class="layui-icon">&#xe68e;</i>
+            我的主页
+        </a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="http://120.46.82.82:8080/code/user/toHaveDownloaded/1">
+            <i class="layui-icon">&#xe857;</i>
+            已下载资源
+        </a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="http://120.46.82.82:8080/code/user/userCenter">
+            <i class="layui-icon">&#xe612;</i>
+            用户中心
+        </a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="http://120.46.82.82:8080/code/user/toUnUsefulArticleManage">
+            <i class="layui-icon">&#xe64f;</i>
+            失效资源
+            <span th:if="${session.unUsefulArticleLinkCount > 0}"class="layui-badge" th:text="${session.unUsefulArticleLinkCount}" ></span>
+        </a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="http://120.46.82.82:8080/code/user/toAddArticle">
+            <i class="layui-icon">&#xe681;</i>
+            发布资源
+        </a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="http://120.46.82.82:8080/code/user/articleManage">
+            <i class="layui-icon">&#xe620;</i>
+            资源管理
+        </a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="http://120.46.82.82:8080/code/user/userManage/1">
+            <i class="layui-icon">&#xe611;</i>
+            我的消息
+            <span th:if="${session.currentUser.messageCount > 0}"class="layui-badge" th:text="${session.currentUser.messageCount}" ></span>
+        </a>
+    </li>
+</ul>

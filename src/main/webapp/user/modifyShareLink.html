@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>修改百度云链接</title>
+    <link rel="stylesheet" href="http://120.46.82.82:8080/code/static/layui/css/layui.css"></link>
+    <style type="text/css">
+        table tr td{
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+<div style="padding: 20px">
+    <form class="layui-form" method="post">
+        <table>
+            <tr>
+                <td>分享资源：</td>
+                <td><input type="text" id="download" name="download" placeholder="请输入百度云分享地址" required  lay-verify="url" class="layui-input" autocomplete="off"  style="width: 380px;display: inline;"/>&nbsp;&nbsp;<input type="text" id="password" name="password"  autocomplete="off" required  lay-verify="required" placeholder="请输入密码" class="layui-input" style="width: 100px;display: inline;" /></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: center"><button class="layui-btn layui-btn-normal layui-btn-radius" lay-submit="" lay-filter="submitForm" style="width: 300px;">提交</button></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<script type="text/javascript" src="http://120.46.82.82:8080/code/static/fsLayui/plugins/jquery/jquery.min.js"></script>
+<script src="http://120.46.82.82:8080/code/static/layui/layui.js"></script>
+<script type="text/javascript">
+
+    layui.use(['form','layer'], function() {
+        var form = layui.form;
+        var layer = layui.layer;
+        //提交监听
+        form.on('submit(submitForm)', function(data) {
+            //layer.msg(JSON.stringify(data.field));
+            var id=getQueryVariable("id");
+            if(id){
+                $.post("http://120.46.82.82:8080/code/user/modifyArticleShareLink",{articleId:id,download:data.field.download,password:data.field.password},function(result){
+                    if(result.success){
+                        layer.msg("提交成功！", {
+                            icon: 1,
+                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                        }, function(){
+                            parent.window.location.reload();
+                        });
+                    }else{
+                        layer.msg(result.errorInfo);
+                    }
+                },"json");
+            }
+            return false;
+        });
+
+    });
+
+    function getQueryVariable(variable){
+        var query = window.location.search.substring(1);                    //'/user/modifyShareLink.html?id='+data.articleId
+        var vars = query.split("&");
+        for (var i=0;i<vars.length;i++) {
+            var pair = vars[i].split("=");
+            if(pair[0] == variable){
+                return pair[1];
+            }
+        }
+        return(false);
+    }
+
+</script>
+</body>
+</html>

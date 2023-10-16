@@ -1,0 +1,18 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /code
+
+# 数据源配置
+spring:
+  profiles:
+    active: dev # 使用开发环境
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  jmx:
+    default-domain: CodeDomain
+  # 静态资源
+#  mvc:
+#    static-path-pattern: /**

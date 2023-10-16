@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8"/>
+    <title>小师爱学习</title>
+    <link rel="shortcur icon" type="image/x-icon"
+          href="http://120.46.82.82:8080/code/static/foreground/images/logomin.png"/>
+    <link rel="stylesheet" href="http://120.46.82.82:8080/code/static/foreground/layui/css/layui.css"/>
+    <link rel="stylesheet" href="http://120.46.82.82:8080/code/static/foreground/css/global.css"/>
+
+    <script type="text/javascript" src="http://120.46.82.82:8080/code/static/js/jquery-1.8.3.min.js"></script>
+
+    <script type="text/javascript" src="http://120.46.82.82:8080/code/static/layui/layui.js"></script>
+    <!--all 可以不要手动加载模块-->
+    <!--    <script type="text/javascript" src="http://120.46.82.82:8080/code/static/layui/layui.all.js"></script>-->
+
+
+    <script type="text/javascript" src="http://120.46.82.82:8080/code/static/js/index.js"></script>
+
+    <script type="text/javascript" src="http://120.46.82.82:8080/code/static/js/unUsefulArticleManage.js"></script>
+</head>
+
+<body>
+<div th:replace="common/header::#h"></div>
+<div class="layui-container fly-marginTop fly-user-main">
+    <div th:replace="common/left::#l"></div>
+    <div class="fly-panel fly-panel-user" pad20>
+        <div class="layui-tab layui-tab-brief">
+            <div class="layui-tab-content" style="padding: 20px 0">
+                <div class="layui-tab-item layui-show">
+                    <table class="layui-hide" id="test" lay-filter="test"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="common/footer::#f">
+
+
+</div>
+
+<script type="text/html" id="nameTpl">
+    <a href="http://120.46.82.82:8080/code/article/detail{{d.articleId}}}.html" target="_blank">{{d.name}}</a>
+</script>
+
+
+
+
+
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container" >
+        <button onclick="toAddArticle()" class="layui-btn layui-btn-warm layui-btn-radius layui-btn-sm"><i class="layui-icon">&#xe681;</i>发布资源</button>
+        <font color="red">您分享的的资源，以下链接已经失效，请尽快修改，谢谢！</font>
+    </div>
+</script>
+
+
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit" ><i class="layui-icon">&#xe642;</i>修复链接</a>
+</script>
+</body>
+
+</html>

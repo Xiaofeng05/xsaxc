@@ -1,15 +1,18 @@
 # Compiled class file
 *.class
 
-# Log file
+# Logs and databases #
+######################
 *.log
-
+*.sql
+*.sqlite
 # BlueJ files
 *.ctxt
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
-
+# 忽略 target/ 目录下的所有文件
+target/
 # Package Files #
 *.jar
 *.war
@@ -21,4 +24,3 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
-replay_pid*

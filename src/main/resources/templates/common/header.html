@@ -1,0 +1,63 @@
+<div class="fly-header layui-bg-black" id="h" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="layui-container">
+        <div class="fly-logo">
+            <a href="http://120.46.82.82:8080/code">
+                <img src="http://120.46.82.82:8080/code/static/foreground/images/logo.png" style="width: 140px;height: 50px" alt="小师爱学习">
+            </a>
+        </div>
+       <ul class="layui-nav fly-nav layui-hide-xs">
+           <li class="layui-nav-item">
+               <a href="http://120.46.82.82:8080/code/buyVIP"><i class="iconfont icon-kiss"></i>充值积分</a>
+           </li>
+           <li class="layui-nav-item">
+               <a href="http://120.46.82.82:8080/code/fbzyzjf"><i class="iconfont icon-jifen"></i>发布资源赚积分</a>
+           </li>
+       </ul>
+    </div>
+    <!--未登录状态 显示登录注册-->
+    <ul th:if="${session.currentUser == null}" class="layui-nav fly-nav-user">
+        <li class="layui-nav-item">
+            <a class="iconfont icon-touxiang layui-hide-xs" href="javascript:login()"></a>
+        </li>
+        <li class="layui-nav-item">
+            <a  href="javascript:login()">
+                登录
+            </a>
+        </li>
+        <li class="layui-nav-item">
+            <a  href="javascript:register()">
+                注册
+            </a>
+        </li>
+        <li class="layui-nav-item">
+            <a class="iconfont icon-qq" href="#" title="QQ登录">
+            </a>
+        </li>
+    </ul>
+
+     <!--登录后的状态 -->
+    <ul th:if="${session.currentUser != null}" class="layui-nav fly-nav-user">
+        <li id="loginLi" class="layui-nav-item" style="height: 65px;">
+            <a class="fly-nav-avatar" style="margin-right: 10px">
+                <cite class="layui-hide-xs" th:utext="${session.currentUser.nickname}">...</cite>
+                <i th:if="${session.currentUser.vip==true}" class="iconfont icon-renzheng layui-hide-xs" title="会员认证"></i>
+                <i th:if="${session.currentUser.vip==true}" class="layui-badge fly-badge-vip layui-hide-xs" th:text="'VIP'+${session.currentUser.vipGrade}">VIP</i>
+                <img id="titleHeadPortrait" th:src="'http://120.46.82.82:8080/code/static/img/'+ ${session.currentUser.headPortrait}" />
+                <span th:if="${session.unUsefulArticleLinkCount > 0 || session.currentUser.messageCount > 0}" class="layui-badge-dot" style="top: 28px;right: -10px;margin-right: 15px"></span>
+            </a>
+
+            <dl class="layui-nav-child layui-anim layui-anim-scale">
+                <dd><a href="http://120.46.82.82:8080/code/user/home"><i class="layui-icon" style="margin-left: 2px;font-size: 22px;">&#xe68e;</i>我的主页</a> </dd>
+                <dd><a href="http://120.46.82.82:8080/code/user/userCenter"><i class="layui-icon" style="margin-left: 2px;font-size: 22px;">&#xe612;</i>用户中心</a> </dd>
+                <dd><a href="http://120.46.82.82:8080/code/user/userMessage/1"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</a> </dd>
+                <dd><a href="http://120.46.82.82:8080/code/user/articleManage"><i class="layui-icon" style="margin-left: 2px;font-size: 22px;">&#xe620;</i>资源管理</a> </dd>
+                <dd><a href="http://120.46.82.82:8080/code/user/toHaveDownloaded/1"><i class="layui-icon" style="margin-left: 2px;font-size: 22px;">&#xe857;</i>已下载资源</a> </dd>
+                <hr style="margin: 5px 0;">
+                <dd><a href="http://120.46.82.82:8080/code/buyVIP"><i class="layui-icon" style="margin-left: 2px;font-size: 22px;">&#xe735;</i>升级为VIP</a> </dd>
+                <dd><a href="javascript:userLogout()" style="text-align: center;">退出</a> </dd>
+            </dl>
+        </li>
+
+    </ul>
+</div>
+

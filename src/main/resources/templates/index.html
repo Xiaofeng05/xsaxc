@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>小师爱学习</title>
+    <link rel="shortcur icon" type="image/x-icon" href="http://120.46.82.82:8080/code/static/foreground/images/logomin.png"/>
+    <link rel="stylesheet" href="http://120.46.82.82:8080/code/static/foreground/layui/css/layui.css"/>
+    <link rel="stylesheet" href="http://120.46.82.82:8080/code/static/foreground/css/global.css"/>
+
+    <script type="text/javascript" src="http://120.46.82.82:8080/code/static/js/jquery-1.8.3.min.js"></script>
+
+    <script type="text/javascript" src="http://120.46.82.82:8080/code/static/layui/layui.js"></script>
+    <script type="text/javascript" src="http://120.46.82.82:8080/code/static/layui/layui.all.js"></script>
+
+
+    <script type="text/javascript" src="http://120.46.82.82:8080/code/static/js/index.js"></script>
+
+</head>
+
+<body>
+<div th:replace="common/header::#h"></div>
+<div class="fly-panel fly-column" style="height: auto">
+    <div class="layui-container">
+        <ul class="layui-clear" th:utext="${actTypeStr}"></ul>
+    </div>
+</div>
+
+<div class="layui-container">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="fly-panel" style="margin-bottom: 0;border-radius: 10px;padding-left: 10px">
+<!--                <i class="layui-icon ">&#xe627;</i>-->
+                <a href="buyVIP" style="color: red;line-height: 30px;text-align: center;">
+                     公告：欢迎大家光临小师爱学习网站，这里可以分享资源，成功上传资源可以成为本站会员，欢迎加入，一起交流共同进步！！！
+                </a>
+            </div>
+        </div>
+
+        <div class="layui-col-md8">
+            <div class="fly-panel" style="margin-bottom: 0;">
+                <ul class="fly-list">
+                    <li th:each="article:${articleList}">
+                        <a class="fly-avatar">
+                            <img th:src="'http://120.46.82.82:8080/code/static/img/'+${article.user.headPortrait}" th:all="${article.user.nickname}"></img>
+                        </a>
+                        <h2>
+                            <a class="layui-badge" th:text="${article.arcType.arcTypeName}"></a>
+                            <a th:href="@{'/article/detail/'+${article.articleId}+'.html'}" target="_blank" th:utext="${article.name}"></a>
+                        </h2>
+                        <div class="fly-list-info">
+                            <a>
+                                <cite th:text="${article.user.nickname}"></cite>
+                                <i th:if="${article.user.vip == true}" class="iconfont icon-renzheng">认证信息：会员</i>
+                                <i th:if="${article.user.vip == true}" class="layui-badge fly-badge-vip" th:text="'VIP' + ${article.user.vipGrade}">VIP</i>
+                            </a>
+                           <span th:text="${#dates.format(article.publishDate,'yyyy-MM-dd HH:mm:ss')}"></span>
+                            <span th:if="!${article.free}" class="fly-list-kiss layui-hide-xs" title="积分">
+                                <i class="iconfont icon-kiss"></i>
+                                <span th:text="${article.points}"></span>
+                            </span>
+                            <span th:if="${article.free}" class="layui-badge fly-badge-accept layui-hide-xs">免费资源</span>
+                            <span class = "fly-list-nums">
+                                <i class="iconfont" title="人气">&#xe60b</i>
+                                <span th:text="${article.click}"></span>
+                            </span>
+                        </div>
+                        <div class="fly-list-badge">
+                            <span th:if="${article.hot}" class="layui-badge layui-bg-red" th:text="热门"></span>
+                        </div>
+                    </li>
+                </ul>
+                <div style="text-align: center" th:utext="${pageStr}"></div>
+            </div>
+        </div>
+        <div class="layui-col-md4">
+            <div class="fly-panel">
+                <form class="layui-form" action="http://120.46.82.82:8080/code/article/search">
+                    <input type="text" style="width: 80%;display: inline" th:value="${keywords}" name="keywords"
+                     lay-filter="searchInput" lay-verify="required" id="keywords" required placeholder="请输入关键词" autocomplete="off" class="layui-input">
+                    <button class="layui-btn layui-btn-warm layui-btn-radius layui-btn-sm" lay-submit=""><i class="layui-icon">&#xe615;</i>搜索</button>
+                </form>
+            </div>
+
+            <div class="fly-panel">
+                <h3 class="fly-panel-title">下载排行</h3>
+                <ul class="fly-panel-main fly-list-static">
+                    <li th:each="article: ${application.hotArticle}">
+                        <a th:href="@{'/article/detail/'+${article.articleId}+'.html'}" target="_blank" th:text="${article.name}"></a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="fly-panel fly-list-one">
+                <dt class="fly-panel-title">最新资源</dt>
+                    <dd th:each="article: ${application.newArticle}">
+                        <a th:href="@{'/article/detail/'+${article.articleId}+'.html'}" target="_blank" th:text="${article.name}"></a>
+                        <span><i class="iconfont" title="人气">&#xe60b;</i><span th:text="${article.click}"></span></span>
+                    </dd>
+            </div>
+
+            <div class="fly-panel fly-list-one">
+                <dt class="fly-panel-title">热搜资源</dt>
+                <dd th:each="article: ${application.randArticle}">
+                    <a th:href="@{'/article/detail/'+${article.articleId}+'.html'}" target="_blank" th:text="${article.name}"></a>
+                    <span><i class="iconfont" title="人气">&#xe60b;</i><span th:text="${article.click}"></span></span>
+                </dd>
+            </div>
+
+
+            <div class="fly-panel fly-link">
+                <dt class="fly-panel-title">友情链接</dt>
+                <dl class="fly-panel-main">
+                    <dd th:each="link: ${application.LinkList}">
+                        <a th:href="@{${link.linkUrl}}" target="_blank" th:text="${link.linkName}"></a>
+                    </dd>
+                    <a href="http://wpa.qq.com/msgrd?v=3&uin=2946364160&site=qq&menu=yes" target="_blank" class="fly-link" >申请友链</a>
+                </dl>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div th:replace="common/footer.html::#f"></div>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    $(function () {
+        var user = [[${session.currentUser}]];
+        if (user != null && user.userName == null && user.email == null){
+            layui.use('layer',function () {
+             var layer = layui.layer;
+             layer.open({
+                 type:2,
+                 title:false,
+                 area:['450px','280px'],
+                 closeBtn: 0, // 不显示关闭按钮
+                 scrollbar:false , // 禁止浏览器出现滚动条
+                 resize: false, // 禁止拉伸
+                 move:false,  // 禁止拖拽
+                 shade:0.8,   // 遮罩
+                 shadeClose:false, // 开启遮罩关闭
+                 content:"http://120.46.82.82:8080/code/user/bindEmail.html"
+             })
+            })
+        }
+    })
+
+
+    /*]]*/
+</script>
+</body>
+
+</html>

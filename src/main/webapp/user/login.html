@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册页面</title>
+    <link rel="stylesheet" href="http://120.46.82.82:8080/code/static/layui/css/layui.css"/>
+    <link rel="stylesheet" href="http://120.46.82.82:8080/code/static/fsLayui/plugins/jquery/jquery.min.js"/>
+
+    <!--绝对路径：D:\Springboot_Java\code\src\main\resources\static\static\fsLayui\plugins\jquery\jquery.min.js-->
+    <!--http://120.46.82.82:8080/code/+-->
+    <!--static/static/layui/layui.js-->
+    <!--${pageContent.request.ContentPath}-->
+</head>
+<body style="height: 300px">
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px">
+    <legend class="">用户登录</legend>
+</fieldset>
+<!--action="/code"-->
+<form class="layui-form" action="/code" method="post" style="text-align: center">
+    <div class="layui-form-item" style="margin-bottom: 5px">
+        <label class="layui-form-label">用&nbsp;户&nbsp;名：</label>
+        <div class="layui-input-inline">
+            <input type="text" lay-verify="userName"  id="userName" name="userName" required="true" placeholder="请输入用户名"
+                   autocomplete="off"
+                   class="layui-input"
+                   style="width: 280px"/>
+        </div>
+    </div>
+
+    <div class="layui-form-item" style="margin-bottom: 5px">
+        <label class="layui-form-label">密&nbsp;&nbsp;码：</label>
+        <div class="layui-input-inline">
+            <input type="password" lay-verify="password" id="password" name="password" required="true" placeholder="请输入密码"
+                   autocomplete="off"
+                   class="layui-input"
+                   style="width: 280px"/>
+        </div>
+    </div>
+
+    <div class="layui-form-item" style="margin-bottom: 5px;">
+        <input type="checkbox" id="rememberMe" name="rememberMe"  lay-shin="primary" title="记住密码"/>
+        <a href="javascript:findPassword()">忘记密码？</a>
+    </div>
+    <div class="layui-form-item" style="margin-top: 15px;text-align: center;">
+        <button class="layui-btn layui-btn-normal layui-btn-radius" lay-submit="" lay-filter="checkForm"
+                style="width: 120px">登录
+        </button>
+    </div>
+
+</form>
+<script type="text/javascript" src="http://120.46.82.82:8080/code/static/layui/layui.all.js"></script>
+<!--<script type="text/javascript" src="../static/layui/layui.js"></script>-->
+<script type="text/javascript" src="http://120.46.82.82:8080/code/static/js/jquery-1.8.3.min.js"></script>
+
+<script type="text/javascript" src="http://120.46.82.82:8080/code/static/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+    /**
+     * 找回密码
+     */
+    function findPassword(){
+        // 得到当前iframe的索引
+        const index = parent.layer.getFrameIndex(window.name);
+        // 关闭当前弹出的iframe
+        parent.layer.close(index);
+        parent.layer.open({
+            type : 2,
+            title : false,
+            area : [ '450px', '370px' ], //宽高
+            closeBtn : 0, //不显示关闭按钮
+            scrollbar: false, //禁止浏览器出现滚动条
+            resize: false, //禁止拉伸
+            move : false, //禁止拖拽
+            shade : 0.8, //遮罩
+
+            shadeClose : true, //开启遮罩关闭
+            content : 'http://120.46.82.82:8080/code/user/findPassword.html', //这里content是一个Url
+        });
+    }
+
+
+    layui.form.verify({
+        userName: [
+            /^[\S]{5,15}$/,
+            "用户名必须5-15位，且不能有空格"
+        ],
+        password: [
+            /^[\S]{6,18}$/,
+            "密码必须5-15位，且不能有空格"
+        ],
+
+    });
+
+    layui.use(['form', 'jquery'], function () {
+        var $ = layui.$;
+        var form = layui.form;
+        //刷新界面 所有元素
+        form.render();
+        form.on('submit(checkForm)', function (data) {
+            // var rememberMe = $('#rememberMe').val();
+            var rememberMe = data.field.rememberMe;
+            var data = $('form').serializeArray();
+            var url = "http://120.46.82.82:8080/code/user/login";
+            // alert(url);
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: data,
+                success: function (res) {
+                    if (res.success) {
+                        /**
+                         * 记住密码
+                         */
+                        if (rememberMe == 'on') {
+                            // 有效期7天
+                            $.cookie("user", $("#userName").val().trim() + "-" + $("#password").val().trim(), {expires: 7});
+                        } else {
+                            $.cookie("user", null);
+                        }
+
+                        layer.msg("登录成功！", {
+                            icon: 1,
+                            time: 1500
+                        }, function () {
+                            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                            parent.location.reload();
+                            parent.layer.close(index); //再执行关闭
+                        });
+                    } else {
+                        layer.msg(res.errorInfo);
+                    }
+
+                },
+                error: function (data) {
+                    layer.msg("网络错误！");
+                }
+            });
+            return  false;
+        })
+
+    });
+    $(function () {
+        // 从cookie中获取记录的用户名和密码
+        var user = $.cookie("user");
+        if (typeof (user) != 'undefined' && user != null) {
+            var userNameAndPassword = user.split("-");
+            console.log(userNameAndPassword[0]);
+            console.log(userNameAndPassword[1]);
+            $("#userName").val(userNameAndPassword[0]);
+            $("#password").val(userNameAndPassword[1]);
+            $("#rememberMe").attr({"checked": "checked"});
+            $("#rememberMe").next().addClass("layui-form-checked");
+        }
+    })
+</script>
+</body>
+</html>

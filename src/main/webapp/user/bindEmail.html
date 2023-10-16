@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户名和邮箱绑定页面</title>
+    <link rel="stylesheet" href="http://120.46.82.82:8080/code/static/layui/css/layui.css"/>
+    <link rel="stylesheet" href="http://120.46.82.82:8080/code/static/fsLayui/plugins/jquery/jquery.min.js"/>
+
+    <!--绝对路径：D:\Springboot_Java\code\src\main\resources\static\static\fsLayui\plugins\jquery\jquery.min.js-->
+    <!--http://120.46.82.82:8080/code/+-->
+    <!--static/static/layui/layui.js-->
+    <!--${pageContent.request.ContentPath}-->
+</head>
+<body style="height: 300px">
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px">
+    <legend class="">用户名和邮箱绑定（首次登录）</legend>
+</fieldset>
+
+<form class="layui-form" action="/code" method="post" style="text-align: center">
+    <div class="layui-form-item" style="margin-bottom: 5px">
+        <label class="layui-form-label">用&nbsp;户&nbsp;名：</label>
+        <div class="layui-input-inline">
+            <input type="text" lay-verify="userName" name="userName" required="true" placeholder="请输入用户名(用于普通登录)" autocomplete="off"
+                   class="layui-input"
+                   style="width: 280px"/>
+        </div>
+    </div>
+
+
+    <div class="layui-form-item" style="margin-bottom: 5px">
+        <label class="layui-form-label">邮&nbsp;&nbsp;箱：</label>
+        <div class="layui-input-inline">
+            <input type="email" name="email" required="true" placeholder="请输入邮箱（用于找回密码）" autocomplete="off"
+                   class="layui-input"
+                   style="width: 280px"/>
+        </div>
+    </div>
+
+
+    <div class="layui-form-item" style="margin-top: 15px;text-align: center;" >
+        <button class="layui-btn layui-btn-normal layui-btn-radius" lay-submit="" lay-filter="checkForm" style="width: 120px">确认绑定</button>
+    </div>
+    <p style="color: red;">普通用户登录的初始密码是：123123（尽快修改）</p>
+    <p style="color: red;">如果你已经有账号，请前往用户中心进行绑定</p>
+
+</form>
+<script type="text/javascript" src="http://120.46.82.82:8080/code/static/layui/layui.all.js"></script>
+<!--http://120.46.82.82:8080/code/ -->
+<!--<script type="text/javascript" src="../static/layui/layui.js"></script>-->
+<script type="text/javascript">
+    layui.form.verify({
+        userName:[
+            /^[\S]{5,15}$/,
+            "用户名必须5-15位，且不能有空格"
+        ],
+
+    });
+    /*
+    http://120.46.82.82:8080/code/user/register
+    */
+    layui.use(['form','jquery'],function(){
+        var $ = layui.$;
+        var form = layui.form;
+        //刷新界面 所有元素
+        form.render();
+        form.on('submit(checkForm)',function(data){
+            var data = $('form').serializeArray();
+            var url = "http://120.46.82.82:8080/code/user/bindEmail"
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data:data,
+                async:false,
+                success:function (res) {
+                    if (res.success) {
+                        layer.msg("绑定成功",{
+                            icon:1,
+                            time:1500
+                        },function () {
+                            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                            parent.layer.close(index); //再执行关闭
+                        });
+                        parent.location.reload();
+                    }else {
+                        layer.msg(res.errorInfo);
+                    }
+                },
+                error:function (data) {
+                    layer.msg("网络错误！");
+                }
+            });
+            return false;
+        })
+
+    });
+</script>
+</body>
+</html>
